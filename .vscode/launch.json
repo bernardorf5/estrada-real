@@ -1,0 +1,13 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Estrada Real API",
+            "request": "launch",
+            "mainClass": "com.estradareal.estrada_real_api.EstradaRealApiApplication",
+            "projectName": "estrada-real-api",
+            "envFile": "${workspaceFolder}/estrada-real-api/.env"
+        }
+    ]
+}
