@@ -1,0 +1,76 @@
+@startuml
+
+abstract class Usuario {
+  - id : Long
+  - nome : String
+  - login : String
+  - senha : String
+  - papel : Papel
+}
+
+class Cliente {
+  - rg : String
+  - cpf : String
+  - endereco : String
+  - profissao : String
+}
+
+class Agente {
+  - cnpj : String
+  - razaoSocial : String
+}
+
+class Rendimento {
+  - id : Long
+  - entidadeEmpregadora : String
+  - valor : BigDecimal
+}
+
+class Automovel {
+  - id : Long
+  - matricula : String
+  - ano : int
+  - marca : String
+  - modelo : String
+  - placa : String
+}
+
+class Pedido {
+  - id : Long
+  - criadoEm : LocalDateTime
+  - status : StatusPedido
+}
+
+class ContratoCredito {
+  - id : Long
+  - valor : BigDecimal
+}
+
+enum Papel {
+  CLIENTE
+  EMPRESA
+  BANCO
+}
+
+enum StatusPedido {
+  EM_ANALISE
+  APROVADO
+  REJEITADO
+  CONTRATO_EXECUTADO
+  CANCELADO
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Agente
+
+Cliente "1" *-- "0..3" Rendimento : possui
+Cliente "1" --> "*" Pedido : solicita
+Pedido "*" --> "1" Automovel : aluga
+Automovel "*" --> "1" Usuario : proprietario
+Pedido "*" --> "0..1" Agente : avaliadoPor
+Pedido "1" --> "0..1" ContratoCredito : financiadoPor
+ContratoCredito "*" --> "1" Agente : concedidoPor
+
+Usuario ..> Papel
+Pedido ..> StatusPedido
+@enduml
