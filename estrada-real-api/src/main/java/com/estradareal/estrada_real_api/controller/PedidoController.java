@@ -32,7 +32,7 @@ public class PedidoController {
 
     @PutMapping("/{id}")
     public PedidoResponse atualizar(Authentication auth, @PathVariable Long id,
-                                    @Valid @RequestBody PedidoRequest req) {
+            @Valid @RequestBody PedidoRequest req) {
         return service.atualizar(auth.getName(), id, req);
     }
 

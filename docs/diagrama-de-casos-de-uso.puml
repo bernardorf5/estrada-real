@@ -1,0 +1,44 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Cliente
+actor Agente
+actor Empresa
+actor Banco
+Empresa --|> Agente
+Banco --|> Agente
+
+rectangle "Estrada Real" {
+  usecase "Cadastrar-se" as UC1
+  usecase "Fazer login" as UC2
+  usecase "Gerenciar perfil\n(CRUD de cliente)" as UC3
+  usecase "Criar pedido de aluguel" as UC4
+  usecase "Solicitar contrato de crédito" as UC5
+  usecase "Consultar pedidos e status" as UC6
+  usecase "Modificar pedido" as UC7
+  usecase "Cancelar pedido" as UC8
+  usecase "Avaliar pedido\n(aprovar ou rejeitar)" as UC9
+  usecase "Executar contrato" as UC10
+}
+
+Cliente --> UC1
+Cliente --> UC2
+Cliente --> UC3
+Cliente --> UC4
+Cliente --> UC6
+Cliente --> UC7
+Cliente --> UC8
+
+Agente --> UC1
+Agente --> UC2
+Agente --> UC9
+Agente --> UC10
+
+UC5 .> UC4 : <<extend>>
+
+note bottom of UC2
+  Todos os casos de uso, exceto
+  "Cadastrar-se", exigem login.
+end note
+@enduml

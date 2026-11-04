@@ -19,7 +19,7 @@ public class AuthService {
     private final PasswordEncoder encoder;
 
     public AuthService(UsuarioRepository usuarios, ClienteRepository clientes,
-                       AgenteRepository agentes, PasswordEncoder encoder) {
+            AgenteRepository agentes, PasswordEncoder encoder) {
         this.usuarios = usuarios;
         this.clientes = clientes;
         this.agentes = agentes;
@@ -27,8 +27,10 @@ public class AuthService {
     }
 
     public ClienteResponse registrarCliente(ClienteRegistroRequest r) {
-        if (usuarios.existsByLogin(r.login())) throw Regras.invalido("Login já em uso");
-        if (clientes.existsByCpf(r.cpf())) throw Regras.invalido("CPF já cadastrado");
+        if (usuarios.existsByLogin(r.login()))
+            throw Regras.invalido("Login já em uso");
+        if (clientes.existsByCpf(r.cpf()))
+            throw Regras.invalido("CPF já cadastrado");
         Regras.maximoTresRendimentos(r.rendimentos());
 
         Cliente c = new Cliente();
@@ -46,9 +48,12 @@ public class AuthService {
     }
 
     public AgenteResponse registrarAgente(AgenteRegistroRequest r) {
-        if (r.papel() == Papel.CLIENTE) throw Regras.invalido("Agente deve ser EMPRESA ou BANCO");
-        if (usuarios.existsByLogin(r.login())) throw Regras.invalido("Login já em uso");
-        if (agentes.existsByCnpj(r.cnpj())) throw Regras.invalido("CNPJ já cadastrado");
+        if (r.papel() == Papel.CLIENTE)
+            throw Regras.invalido("Agente deve ser EMPRESA ou BANCO");
+        if (usuarios.existsByLogin(r.login()))
+            throw Regras.invalido("Login já em uso");
+        if (agentes.existsByCnpj(r.cnpj()))
+            throw Regras.invalido("CNPJ já cadastrado");
 
         Agente a = new Agente();
         a.setNome(r.nome());

@@ -21,11 +21,31 @@ public class Rendimento {
     @Column(nullable = false)
     private BigDecimal valor;
 
-    public Long getId() { return id; }
-    public Cliente getCliente() { return cliente; }
-    public void setCliente(Cliente cliente) { this.cliente = cliente; }
-    public String getEntidadeEmpregadora() { return entidadeEmpregadora; }
-    public void setEntidadeEmpregadora(String e) { this.entidadeEmpregadora = e; }
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
+    public Long getId() {
+        return id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public String getEntidadeEmpregadora() {
+        return entidadeEmpregadora;
+    }
+
+    public void setEntidadeEmpregadora(String e) {
+        this.entidadeEmpregadora = e;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 }

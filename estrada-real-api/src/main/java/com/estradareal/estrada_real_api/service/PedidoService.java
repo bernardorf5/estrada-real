@@ -19,15 +19,13 @@ public class PedidoService {
     private final ContratoCreditoRepository contratos;
 
     public PedidoService(PedidoRepository pedidos, ClienteRepository clientes, AgenteRepository agentes,
-                         AutomovelRepository automoveis, ContratoCreditoRepository contratos) {
+            AutomovelRepository automoveis, ContratoCreditoRepository contratos) {
         this.pedidos = pedidos;
         this.clientes = clientes;
         this.agentes = agentes;
         this.automoveis = automoveis;
         this.contratos = contratos;
     }
-
-    // ---------- lado do cliente ----------
 
     public PedidoResponse criar(String login, PedidoRequest req) {
         Cliente cliente = clientes.findByLogin(login)
@@ -65,17 +63,32 @@ public class PedidoService {
         return PedidoResponse.de(pedidos.save(p));
     }
 
-    // ---------- lado do agente ----------
 
     @Transactional(readOnly = true)
-    public List<PedidoResponse> todos() {
-        return pedidos.findAllByOrderByCriadoEmDesc().stream().map(PedidoResponse::de).toList();
+    public List<PedidoResponse> doAgente(String loginAgente) {
+        Agente agente = agentes.findByLogin(loginAgente)
+                .orElseThrow(() -> Regras.naoEncontrado("Agente não encontrado"));
+        List<Pedido> lista = agente.getPapel() == Papel.BANCO
+                ? pedidos.findByContratoCreditoBancoIdOrderByCriadoEmDesc(agente.getId())
+                : pedidos.findDaEmpresa(agente.getId());
+        return lista.stream().map(PedidoResponse::de).toList();
+    }
+
+    private boolean visivelPara(Agente agente, Pedido p) {
+        ContratoCredito cc = p.getContratoCredito();
+        if (agente.getPapel() == Papel.BANCO) {
+            return cc != null && cc.getBanco().getId().equals(agente.getId());
+        }
+        return cc == null || p.getAutomovel().getProprietario().getId().equals(agente.getId());
     }
 
     public PedidoResponse atualizarStatus(String loginAgente, Long id, StatusPedido novo) {
         Agente agente = agentes.findByLogin(loginAgente)
                 .orElseThrow(() -> Regras.naoEncontrado("Agente não encontrado"));
         Pedido p = pedidos.findById(id).orElseThrow(() -> Regras.naoEncontrado("Pedido não encontrado"));
+        if (!visivelPara(agente, p)) {
+            throw Regras.naoEncontrado("Pedido não encontrado");
+        }
 
         boolean avaliacao = p.getStatus() == StatusPedido.EM_ANALISE
                 && (novo == StatusPedido.APROVADO || novo == StatusPedido.REJEITADO);
@@ -88,7 +101,6 @@ public class PedidoService {
         return PedidoResponse.de(pedidos.save(p));
     }
 
-    // ---------- auxiliares ----------
 
     private Pedido pedidoDoCliente(String login, Long id) {
         Pedido p = pedidos.findById(id).orElseThrow(() -> Regras.naoEncontrado("Pedido não encontrado"));
@@ -104,7 +116,9 @@ public class PedidoService {
 
         automoveis.findByPlaca(d.placa())
                 .filter(outro -> !outro.getId().equals(auto.getId()))
-                .ifPresent(outro -> { throw Regras.invalido("Já existe um automóvel com essa placa"); });
+                .ifPresent(outro -> {
+                    throw Regras.invalido("Já existe um automóvel com essa placa");
+                });
 
         Usuario dono;
         if (req.proprietarioId() == null) {

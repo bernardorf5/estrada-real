@@ -6,7 +6,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 final class Regras {
 
-    private Regras() { }
+    private Regras() {
+    }
 
     static ResponseStatusException invalido(String msg) {
         return new ResponseStatusException(HttpStatus.BAD_REQUEST, msg);

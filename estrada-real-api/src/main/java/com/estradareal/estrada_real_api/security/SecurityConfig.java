@@ -27,16 +27,16 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(Customizer.withDefaults())
-            .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(a -> a
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/auth/register/**").permitAll()
-                .requestMatchers("/api/clientes/**", "/api/pedidos/**").hasRole("CLIENTE")
-                .requestMatchers("/api/agentes/pedidos/**").hasAnyRole("EMPRESA", "BANCO")
-                .anyRequest().authenticated())
-            .httpBasic(b -> b.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults())
+                .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(a -> a
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth/register/**").permitAll()
+                        .requestMatchers("/api/clientes/**", "/api/pedidos/**").hasRole("CLIENTE")
+                        .requestMatchers("/api/agentes/pedidos/**").hasAnyRole("EMPRESA", "BANCO")
+                        .anyRequest().authenticated())
+                .httpBasic(b -> b.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)));
         return http.build();
     }
 

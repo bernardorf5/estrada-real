@@ -9,7 +9,8 @@ import java.util.List;
 
 public final class Dtos {
 
-    private Dtos() { }
+    private Dtos() {
+    }
 
     public record RendimentoDto(
             @NotBlank String entidadeEmpregadora,
@@ -35,7 +36,8 @@ public final class Dtos {
             @NotBlank String cpf,
             @NotBlank String endereco,
             @NotBlank String profissao,
-            @Valid @Size(max = 3) List<RendimentoDto> rendimentos) { }
+            @Valid @Size(max = 3) List<RendimentoDto> rendimentos) {
+    }
 
     public record AgenteRegistroRequest(
             @NotBlank String nome,
@@ -43,14 +45,16 @@ public final class Dtos {
             @NotBlank @Size(min = 6, max = 72) String senha,
             @NotBlank String cnpj,
             @NotBlank String razaoSocial,
-            @NotNull Papel papel) { }
+            @NotNull Papel papel) {
+    }
 
     public record ClienteUpdateRequest(
             @NotBlank String nome,
             @NotBlank String rg,
             @NotBlank String endereco,
             @NotBlank String profissao,
-            @Valid @Size(max = 3) List<RendimentoDto> rendimentos) { }
+            @Valid @Size(max = 3) List<RendimentoDto> rendimentos) {
+    }
 
     public record UsuarioResponse(Long id, String nome, String login, Papel papel) {
         public static UsuarioResponse de(Usuario u) {
@@ -59,7 +63,7 @@ public final class Dtos {
     }
 
     public record ClienteResponse(Long id, String nome, String login, String rg, String cpf,
-                                  String endereco, String profissao, List<RendimentoDto> rendimentos) {
+            String endereco, String profissao, List<RendimentoDto> rendimentos) {
         public static ClienteResponse de(Cliente c) {
             return new ClienteResponse(c.getId(), c.getNome(), c.getLogin(), c.getRg(), c.getCpf(),
                     c.getEndereco(), c.getProfissao(),
@@ -88,9 +92,11 @@ public final class Dtos {
             @NotNull @Valid AutomovelDto automovel,
             Long proprietarioId,
             Long bancoId,
-            BigDecimal valorCredito) { }
+            BigDecimal valorCredito) {
+    }
 
-    public record StatusRequest(@NotNull StatusPedido status) { }
+    public record StatusRequest(@NotNull StatusPedido status) {
+    }
 
     public record PedidoResponse(
             Long id,

@@ -1,0 +1,35 @@
+@startuml
+skinparam packageStyle rectangle
+
+package "Front-end (React + Vite)" as FE {
+  package "pages" as fpages
+  package "components" as fcomp
+  package "auth e api" as fapi
+}
+
+package "Back-end (Spring Boot, MVC)" as BE {
+  package "controller" as ctrl
+  package "service" as svc
+  package "repository" as repo
+  package "model" as model
+  package "dto" as dto
+  package "security" as sec
+}
+
+database "Supabase\n(PostgreSQL)" as DB
+
+fpages --> fcomp
+fpages --> fapi
+fapi ..> ctrl : HTTP / JSON
+
+ctrl --> svc
+ctrl --> dto
+svc --> repo
+svc --> model
+svc --> dto
+dto --> model
+repo --> model
+sec --> repo
+sec --> model
+repo ..> DB : JDBC
+@enduml

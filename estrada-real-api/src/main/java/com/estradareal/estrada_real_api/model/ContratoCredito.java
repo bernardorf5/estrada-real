@@ -18,9 +18,23 @@ public class ContratoCredito {
     @Column(nullable = false)
     private BigDecimal valor;
 
-    public Long getId() { return id; }
-    public Agente getBanco() { return banco; }
-    public void setBanco(Agente banco) { this.banco = banco; }
-    public BigDecimal getValor() { return valor; }
-    public void setValor(BigDecimal valor) { this.valor = valor; }
+    public Long getId() {
+        return id;
+    }
+
+    public Agente getBanco() {
+        return banco;
+    }
+
+    public void setBanco(Agente banco) {
+        this.banco = banco;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
 }

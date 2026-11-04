@@ -27,13 +27,13 @@ public class AgenteController {
     }
 
     @GetMapping("/pedidos")
-    public List<PedidoResponse> todosOsPedidos() {
-        return pedidos.todos();
+    public List<PedidoResponse> todosOsPedidos(Authentication auth) {
+        return pedidos.doAgente(auth.getName());
     }
 
     @PatchMapping("/pedidos/{id}/status")
     public PedidoResponse atualizarStatus(Authentication auth, @PathVariable Long id,
-                                          @Valid @RequestBody StatusRequest req) {
+            @Valid @RequestBody StatusRequest req) {
         return pedidos.atualizarStatus(auth.getName(), id, req.status());
     }
 }

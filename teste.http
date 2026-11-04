@@ -1,0 +1,15 @@
+POST http://localhost:8080/api/auth/register/cliente
+Content-Type: application/json
+
+{
+    "nome": "Maria Souza",
+    "login": "maria",
+    "senha": "123456",
+    "rg": "MG-12.345.678",
+    "cpf": "123.456.789-00",
+    "endereco": "Rua das Flores, 100",
+    "profissao": "Analista",
+    "rendimentos": [
+        { "entidadeEmpregadora": "Empresa X", "valor": 6200 }
+    ]
+}
