@@ -104,7 +104,7 @@ SUPABASE_DB_URL=jdbc:postgresql://<host>.pooler.supabase.com:5432/postgres?user=
 ```
 
 #### 2 Front-end (React, Vite)
-Opcional. Por padrão, o front-end usa `http://localhost:8080`. Para mudar, copie `estrada-real-web/.env.example` para `.env`.
+Opcional. Por padrão, o front-end usa `http://localhost:5173`. Para mudar, copie `estrada-real-web/.env.example` para `.env`.
 
 ### 📦 Instalação de Dependências
 
@@ -274,6 +274,6 @@ As requisições da API podem ser testadas pela extensão **REST Client** do VS 
 
 ## 👥 Autores
 
-| 👤 Nome | 🖼️ Foto | :octocat: GitHub |
+| 👤 Nome | 🖼️ Foto |       GitHub    |
 |---------|----------|-----------------|
 | Bernardo Ramos Ferreira | <div align="center"><img src="https://github.com/bernardorf5.png" width="70px" height="70px"></div> | <div align="center"><a href="https://github.com/bernardorf5"><img src="https://joaopauloaramuni.github.io/image/github6.png" width="50px" height="50px"></a></div> |
